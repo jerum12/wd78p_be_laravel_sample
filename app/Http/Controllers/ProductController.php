@@ -61,12 +61,20 @@ class ProductController extends Controller
     public function show(string $id)
     {
         //
-        $product = Products::findOrFail($id);
-        $response = [
-            "code" => 200,
-            "message" => "Successfully retrieved product by id!",
-            'product' => new ProductsResource($product)
-        ];
+        try {
+            $product = Products::findOrFail($id);
+            $response = [
+                "code" => 200,
+                "message" => "Successfully retrieved product by id!",
+                'product' => new ProductsResource($product)
+            ];
+        } catch (\Throwable $th) {
+            $response = [
+                "code" => 500,
+                "message" => "Error retrieving product by id!",
+                "error" => $th->getMessage(),
+            ];
+         }
         return $response;
     }
 
@@ -76,15 +84,24 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $input = $request->all();
-        $product = Products::findOrFail($id);
-        $product->update($input);
-
-        $response = [
-            "code" => 200,
-            "message" => "Successfully update product by id!",
-            'product' => new ProductsResource($product)
-        ];
+        try {
+            $input = $request->all();
+            $product = Products::findOrFail($id);
+            $product->update($input);
+    
+            $response = [
+                "code" => 200,
+                "message" => "Successfully update product by id!",
+                'product' => new ProductsResource($product)
+            ];
+        } catch (\Throwable $th) {
+            $response = [
+                "code" => 500,
+                "message" => "Error updating product by id!",
+                "error" => $th->getMessage(),
+            ];
+        }
+    
         return $response;
     }
 
@@ -94,13 +111,22 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
-        $product = Products::findOrFail($id);
-        $product->delete();
-        $response = [
-            "code" => 200,
-            "message" => "Successfully update deleted by id!",
-            'product' => new ProductsResource($product)
-        ];
+        try {
+            $product = Products::findOrFail($id);
+            $product->delete();
+            $response = [
+                "code" => 200,
+                "message" => "Successfully update deleted by id!",
+                'product' => new ProductsResource($product)
+            ];
+        } catch (\Throwable $th) {
+            $response = [
+                "code" => 500,
+                "message" => "Error deleting product by id!",
+                "error" => $th->getMessage(),
+            ];
+        }
+   
         return $response;
     }
 }
