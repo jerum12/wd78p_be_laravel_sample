@@ -1,0 +1,56 @@
+1. composer require laravel/passport --with-all-dependencies
+2. php artisan migrate
+3. php artisan passport:install
+4. Open User Model change use Laravel\Sanctum\HasApiTokens -> Laravel\Passport\HasApiTokens
+5. Open config/auth.php find guards.
+ 'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
+        'api' => [
+            'driver' => 'passport',
+            'provider' => 'users'
+        ]
+    ],
+6. Make Controller (AuthenticationController) php artisan make:controller ControllerName
+	public function register(){
+		//validate
+		// return if may error
+		//mag hash ka ng password input
+		//insert sa database
+		//create token
+		//return token
+	}
+	public function logn(){
+		//validate
+		// return if may error
+		// if exist si user(email) sa database
+		//use hash to check password input , password from database
+		//create token
+		//return token
+	}
+	public function logout(){
+		//get niyo token from user
+		//i revoke token
+		//return message
+	}
+7. Mag add ka ng routes sa api.php
+	1. Middleware and lahat ng routes na gusto mo ng security/need ng token i enclose mo sa middleware
+		Route::middleware('auth:api')->group( function (){
+    			Route::resource('/products', ProductController::class);
+	        	Route::post('/logout',[UserAuthenticationController::class,'logout']);
+		});
+	2. Create ng routes na available without token
+		Route::post('/register',[UserAuthenticationController::class,'register']);
+		Route::post('/login',[UserAuthenticationController::class,'login']);
+8. I serve mo na ung project php artisan server
+9. Itest using postman
+	1. Mag register, (lahat ng nilagay niyo sa validator un ung required na ilagay sa body)
+	2. Mag add ng Header (Accept, application/json)
+	3. Mag login (lahat ng nilagay niyo sa validator un ung required na ilagay sa body)
+	4. Get the token then test the secured api 
+		Header (Authorization, Bearer token na na generate after login)
+
+	

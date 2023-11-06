@@ -1,0 +1,44 @@
+CREATE FULL CRUD APP API
+Note: You need to run mysql in xampp/laragon/wamp
+      Don't forget to include/use yung mga classes
+1-Table
+1-Model
+1-Controller (CRUD)
+
+composer create-project laravel/laravel appName
+
+1-Resources (return JSON FORMAT, fields na need niyo lang ibalik)
+1-Routing (get,post,put,delete)
+
+1. Migration File
+	php artisan make:migration create_name_table
+2. Update ung create_name_table na nasa database/migrations
+	Schema::create
+3. php artisan migrate
+4. Create Model (if iba ung table_name add protected $table = '';)
+	php artisan make:model ModelName
+5. Create Factory (dummy data faker) (i define yung model niyo protected $model = ModelName::class;)
+	php artisan make:factory FactoryName
+   Create Seeder
+	php artisan make:seeder SeederName
+	php artisan db:seed --class=SeederName
+6. add fillable
+	protected $fillable = ['attributes/columns'];
+7. Create controller
+	php artisan make:controller ControllerName --api
+8. Create routes (routes/api.php)
+	Route::method('/course',['ControllerName::class','function sa controller']);
+	Route::resource('/course',ControllerName::class]);
+9. Create Resource
+	php artisan make:resource ResourceName
+10. Lagyan mo na ng logic or mga codes ung functions mo sa Controller
+	index = getAll ModelName::all();
+	store = insert/save  ModelName::create($input);
+	show = getDetailsById ModelName::findOrFail($id);
+	update = updateById $product = ModelName::findOrFail($id);
+		            $product->update($input);
+	destroy = deleteById $product = ModelName::findOrFail($id);
+		            $product->delete($id);
+			  
+
+	
