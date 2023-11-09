@@ -72,7 +72,7 @@ class UserAuthenticationController extends Controller
             }
 
         }else{
-            return response(['message'=> 'Username does not exist!'],500);
+            return response(['message'=> 'Email does not exist!'],500);
         }
     }
 

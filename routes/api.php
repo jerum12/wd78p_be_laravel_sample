@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\UserAuthenticationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,7 @@ Route::resource('/user', UserController::class)->middleware('checkKey');
 
 Route::middleware('auth:api')->group( function (){
     Route::resource('/products', ProductController::class);
+    Route::resource('/services', ServicesController::class);
     Route::post('/logout',[UserAuthenticationController::class,'logout']);
 });
 

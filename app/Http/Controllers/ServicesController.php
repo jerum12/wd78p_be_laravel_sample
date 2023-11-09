@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProductsResource;
-use App\Models\Products;
+use App\Http\Resources\ServicesResources;
+use App\Models\Services;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ServicesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,17 +15,17 @@ class ProductController extends Controller
     {
         //
         try {
-            $products = Products::orderBy('id','desc')->get();
+            $services = Services::orderBy('id','desc')->get();
             $response = [
                 "code" => 200,
-                "message" => "Successfully retrieved product list!",
-                'products' => ProductsResource::collection($products)
+                "message" => "Successfully retrieved service list!",
+                'services' => ServicesResources::collection($services)
             ];
 
         } catch (\Throwable $th) {
             $response = [
                 "code" => 500,
-                "message" => "Error Retrieving product list!",
+                "message" => "Error Retrieving service list!",
             ];
         }
         return $response;
@@ -39,16 +39,16 @@ class ProductController extends Controller
         //
         try {
             $input = $request->all();
-            $product = Products::create($input);
+            $service = Services::create($input);
             $response = [
                 "code" => 200,
-                "message" => "Successfully created product list!",
-                'product' => new ProductsResource($product)
+                "message" => "Successfully created service list!",
+                'service' => new ServicesResources($service)
             ];
         } catch (\Throwable $th) {
             $response = [
                 "code" => 500,
-                "message" => "Error Retrieving product list!",
+                "message" => "Error Retrieving service list!",
                 "error" => $th->getMessage(),
             ];
         }
@@ -62,16 +62,16 @@ class ProductController extends Controller
     {
         //
         try {
-            $product = Products::findOrFail($id);
+            $service = Services::findOrFail($id);
             $response = [
                 "code" => 200,
-                "message" => "Successfully retrieved product by id!",
-                'product' => new ProductsResource($product)
+                "message" => "Successfully retrieved service by id!",
+                'service' => new ServicesResources($service)
             ];
         } catch (\Throwable $th) {
             $response = [
                 "code" => 500,
-                "message" => "Error retrieving product by id!",
+                "message" => "Error retrieving service by id!",
                 "error" => $th->getMessage(),
             ];
          }
@@ -86,18 +86,18 @@ class ProductController extends Controller
         //
         try {
             $input = $request->all();
-            $product = Products::findOrFail($id);
-            $product->update($input);
+            $service = Services::findOrFail($id);
+            $service->update($input);
     
             $response = [
                 "code" => 200,
-                "message" => "Successfully update product by id!",
-                'product' => new ProductsResource($product)
+                "message" => "Successfully update service by id!",
+                'service' => new ServicesResources($service)
             ];
         } catch (\Throwable $th) {
             $response = [
                 "code" => 500,
-                "message" => "Error updating product by id!",
+                "message" => "Error updating service by id!",
                 "error" => $th->getMessage(),
             ];
         }
@@ -112,17 +112,17 @@ class ProductController extends Controller
     {
         //
         try {
-            $product = Products::findOrFail($id);
-            $product->delete();
+            $service = Services::findOrFail($id);
+            $service->delete();
             $response = [
                 "code" => 200,
                 "message" => "Successfully update deleted by id!",
-                'product' => new ProductsResource($product)
+                'service' => new ServicesResources($service)
             ];
         } catch (\Throwable $th) {
             $response = [
                 "code" => 500,
-                "message" => "Error deleting product by id!",
+                "message" => "Error deleting service by id!",
                 "error" => $th->getMessage(),
             ];
         }
